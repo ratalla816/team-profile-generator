@@ -18,123 +18,125 @@ const dist = require("dist");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
+// figure out how to do this !!!
 const validation = require("validation");
 // async function
-const writeFileAsync = src.promisify(fs.writeFile);
-const appendFileAsync = src.promisify(fs.appendFile);
+const writeFileAsync = dist.promisify(fs.writeFile);
+const appendFileAsync = dist.promisify(fs.appendFile);
 
 let employArray = [];
 
-async function init(){
-try{
-await prompt()
-// for loop iterates over each employee in the array 
-for (let i = 0; i < employArray.length; i++) {
-   employString = employString + html.renderProfile(employArray[i]);
-}
+   function init() {
+    try { await prompt()
+        // for loop iterates over each employee in the array 
+        for (let i = 0; i < employArray.length; i++) {
+            // renderProfile is what I'm going to use to make the cards
+            return employString = employString + html.renderProfile(employArray[i]);
+        }
 
-// template literal 
-let employString = ``;
-let renderHTML = generateHTML(employString)
-fs.writeFileAsync("./dist/index.html", renderHTML)
+        // template literal 
+        // OR stringify.json?
+        let employString = ``;
+        let renderHTML = generateHTML(employString)
+        fs.writeFileAsync(renderHTML,"./dist/index.html")
 
-} catch (err) {
-return console.log(err);
-}
+    } catch (err) {
+        throw (err);
+    }
 };
 
 // PROMPT BUCKET #1
-async function prompt() {
-    let response = "";
-    do{
-    try{ console.log("/n----------------n/");
-    let response = await inquirer.prompt([
+   function prompt() {
+        let response = await inquirer.prompt([
 
-// array of questions for user input*
-{
-type: "input",
-name: "name",
-message: "Employee name?"
-},
+                // array of questions for user input*
+                {
+                    type: "input",
+                    name: "name",
+                    message: "Employee name?"
+                },
 
-{
-type: "input",
-name: "id",
-message: "Employee ID?"
-},
+                {
+                    type: "input",
+                    name: "id",
+                    message: "Employee ID?"
+                },
 
-{
-type: "input",
-name: "email",
-message: "Employee email address?"
-},
+                {
+                    type: "input",
+                    name: "email",
+                    message: "Employee email address?"
+                },
 
-{
-type: "list",
-message: "Employee role?",
-name: "role",
-choices: ["Engineer","Intern", "Manager"]
-}
-// end of question array //
-]);
-}    
+                {
+                    type: "list",
+                    message: "Employee role?",
+                    name: "role",
+                    choices: ["Engineer", "Intern", "Manager"]
+                }
+                // end of question array //
+            ]);
+        }
 
 // PROMPT BUCKET #2
-let response = "";
-if (response.role === "Engineer"){
-response = await inquirer.prompt([
-{
-type: "input",
-name: "name",
-message: "Enter Github username",
-},
-]);
-const engineer = new Engineer
-// ENGINEER CREATED - push to array
-(response.name, response.id, response.email, response);
-employArray.push(engineer);
+    let response = "";
+        if (response.role === "Engineer") {
+         let response = await inquirer.prompt([
+                {
+                    type: "input",
+                    name: "name",
+                    message: "Enter Github username",
+                },
+            ]);
+            const engineer = new Engineer
+                // ENGINEER CREATED - push to array
+                (response.name, response.id, response.email, response);
+                 employArray.push(engineer);
 
-}else if (response.role === "Intern"){
-response = await inquirer.prompt([
-{
-type: "input",
-name: "name",
-message: "What school are they attending?",
-},
-]);
-const intern = new Intern
-// INTERN CREATED - push to array 
-(response.name, response.id, response.email, response);
-employArray.push(intern);
+        } else if (response.role === "Intern") {
+          let response = await inquirer.prompt([
+                {
+                    type: "input",
+                    name: "name",
+                    message: "What school are they attending?",
+                },
+            ]);
+            const intern = new Intern
+                // INTERN CREATED - push to array 
+                (response.name, response.id, response.email, response);
+                 employArray.push(intern);
 
-}else if (response.role === "Manager"){
-response = await inquirer.prompt([
-{
-type: "input",
-name: "name",
-message: "Office number?",
-},    
-]);
-const manager = new Manager
-// MANAGER CREATED - push to array 
-(response.name, response.id, response.email, response);
-employArray.push(manager);
-}
-  
-teamComplete = inquirer.prompt([
-{
-type: "list",
-message: "Would you like to add more employees?",
-name: "completed",
-choices: ["YES", "NO"]
-},
-]);
+        } else if (response.role === "Manager") {
+          let response = await inquirer.prompt([
+                {
+                    type: "input",
+                    name: "name",
+                    message: "Office number?",
+                },
+            ]);
+            const manager = new Manager
+                // MANAGER CREATED - push to array 
+                (response.name, response.id, response.email, response);
+                 employArray.push(manager);
+        }
 
-// if user chooses "YES" the WHILE function will continue running the program
-}while (teamComplete.completed === "yes");
+        teamComplete = inquirer.prompt([
+            {
+                type: "list",
+                message: "Would you like to add more employees?",
+                name: "completed",
+                choices: ["YES", "NO"]
+            },
+            
+        ]);
 
-// Function call to initialize app*
-init();
-}
+        // if user chooses "YES" then continue running the program
+       if (response.teamComplete === "YES")
+    //    then ?? I don't know what goes here...
+          console.log("\n-------------\n");
+    
+    // Function call to initialize app*
+    init();
+
 
 
