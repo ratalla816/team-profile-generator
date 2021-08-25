@@ -1,6 +1,6 @@
 // stuff I will use: npm inquirer, Jest- validate employee values, async functions, try catch, console logs
 // async await, promisify, else if, require (fs), writeFileAsync, validation
-// stuff I will need: THE SRC FILES!!!!, classes from lib, inquirer questions, team member array, the array index thing (let i = 0; i < array.length; i++)
+// stuff I will need: THE SRC FILES!!!!, classes from lib, inquirer questions, template literals, team member array, the array index thing (let i = 0; i < array.length; i++)
 
 //    _____
 //   |A .  |
@@ -10,8 +10,8 @@
 //   ---"--- 
 
 // packages needed*
-const html = require("./src/htmlGenerate.js");
-const css = require("./src/cssGenerate.js")
+const html = require("./src/generateHTML.js");
+const css = require("./src/generateCSS.js")
 const inquirer = require("inquirer");
 const fs = require("fs");
 const dist = require("dist");
@@ -24,10 +24,31 @@ const writeFileAsync = src.promisify(fs.writeFile);
 const appendFileAsync = src.promisify(fs.appendFile);
 
 let employArray = [];
+// template literal 
 let employString = ``;
 
+async function init(){
+try{
+await prompt()
+// for loop iterates over each employee in the array 
+for (let i = 0; i < employArray.length; i++) {
+   employString = employString + html.renderProfile(employArray[i]);
+}
+
+let renderHTML = generateHTML(employString)
+fs.writeFileAsync("./dist/index.html", renderHTML)
 
 
+
+
+}
+
+
+
+
+
+
+}
 
 // array of questions for user input*
 {
