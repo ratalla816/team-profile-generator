@@ -80,7 +80,7 @@ choices: ["Engineer","Intern", "Manager"]
 }    
 
 // PROMPT BUCKET #2
-finally response = "";
+finally response2 = "";
 if (response.role === "Engineer"){
 response2 = await inquirer.prompt([
 {
