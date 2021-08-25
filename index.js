@@ -1,5 +1,5 @@
-// stuff I will use: npm inquirer, Jest- validate employee values, async functions, try catch, console logs
-// async await, promisify, else if, require (fs), writeFileAsync, validation
+// stuff I will use: npm inquirer, Jest- employee values, async functions, try catch, console logs
+// async await, promisify, else if, require (fs), writeFileAsync, validation??
 // stuff I will need: THE SRC FILES!!!!, classes from lib, inquirer questions, template literals, team member array, the array index thing (let i = 0; i < array.length; i++)
 
 //    _____
@@ -37,6 +37,8 @@ for (let i = 0; i < employArray.length; i++) {
 
 let renderHTML = generateHTML(employString)
 fs.writeFileAsync("./dist/index.html", renderHTML)
+
+} catch 
 
 
 
