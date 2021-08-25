@@ -80,44 +80,44 @@ choices: ["Engineer","Intern", "Manager"]
 }    
 
 // PROMPT BUCKET #2
-finally response2 = "";
+let response = "";
 if (response.role === "Engineer"){
-response2 = await inquirer.prompt([
+response = await inquirer.prompt([
 {
 type: "input",
 name: "name",
 message: "Enter Github username",
-}
+},
 ]);
 const engineer = new Engineer
-// ENGINEER PROTOTYPE CREATED - push to array
-(response.name, response.id, response.email, response2.x);
+// ENGINEER CREATED - push to array
+(response.name, response.id, response.email, response);
 employArray.push(engineer);
 
 }else if (response.role === "Intern"){
-response2 = await inquirer.prompt([
+response = await inquirer.prompt([
 {
 type: "input",
 name: "name",
 message: "What school are they attending?",
-}
+},
 ]);
 const intern = new Intern
-// INTERN PROTOTYPE CREATED - push to array 
-(response.name, response.id, response.email, response2.x);
+// INTERN CREATED - push to array 
+(response.name, response.id, response.email, response);
 employArray.push(intern);
 
 }else if (response.role === "Manager"){
-response2 = await inquirer.prompt([
+response = await inquirer.prompt([
 {
 type: "input",
 name: "name",
 message: "Office number?",
-}    
+},    
 ]);
 const manager = new Manager
-// MANAGER PROTOTYPE CREATED - push to array 
-(response.name, response.id, response.email, response2.x);
+// MANAGER CREATED - push to array 
+(response.name, response.id, response.email, response);
 employArray.push(manager);
 }
   
@@ -127,7 +127,7 @@ type: "list",
 message: "Would you like to add more employees?",
 name: "completed",
 choices: ["YES", "NO"]
-}
+},
 ]);
 
 // if user chooses "YES" the WHILE function will continue running the program
