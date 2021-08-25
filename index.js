@@ -18,8 +18,15 @@ const dist = require("dist");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
+const validation = require("validation");
+// async function
 const writeFileAsync = src.promisify(fs.writeFile);
 const appendFileAsync = src.promisify(fs.appendFile);
+
+let employArray = [];
+let employString = ``;
+
+
 
 
 // array of questions for user input*
