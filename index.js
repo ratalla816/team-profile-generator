@@ -34,8 +34,8 @@ let employArray = [];
             return employString = employString + html.renderProfile(employArray[i]);
         }
 
-        // template literal 
-        // OR stringify.json?
+        // template literal - YES
+        // OR stringify.json? - NO
         let employString = ``;
         let renderHTML = generateHTML(employString)
         fs.writeFileAsync(renderHTML,"./dist/index.html")
@@ -132,6 +132,7 @@ let employArray = [];
 
         // if user chooses "YES" then continue running the program
        if (response.teamComplete === "YES")
+       // else if won't work here.. What if they choose "NO"??
     //    then ?? I don't know what goes here...
           console.log("\n-------------\n");
     

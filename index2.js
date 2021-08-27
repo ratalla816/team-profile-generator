@@ -21,65 +21,92 @@ const Manager = require("./lib/Manager");
 // figure out how to do this !!!
 const validation = require("validation");
 // async function
-const writeFileAsync = dist.promisify(fs.writeFile);
-const appendFileAsync = dist.promisify(fs.appendFile);
+// const writeFileAsync = dist.promisify(fs.writeFile);
+// const appendFileAsync = dist.promisify(fs.appendFile);
 
-let employArray = [];
+  // array of questions for user input*
+//   {
+//     type: "input",
+//     name: "name",
+//     message: "Employee name?"
+// },
 
-   function init() {
-    try { await prompt()
-        // for loop iterates over each employee in the array 
-        for (let i = 0; i < employArray.length; i++) {
-            // renderProfile is what I'm going to use to make the cards
-            return employString = employString + html.renderProfile(employArray[i]);
-        }
+// {
+//     type: "input",
+//     name: "id",
+//     message: "Employee ID?"
+// },
 
-        // template literal 
-        // OR stringify.json?
-        let employString = ``;
-        let renderHTML = generateHTML(employString)
-        fs.writeFileAsync(renderHTML,"./dist/index.html")
+// {
+//     type: "input",
+//     name: "email",
+//     message: "Employee email address?"
+// },
 
-    } catch (err) {
-        throw (err);
-    }
-};
+// {
+//     type: "list",
+//     message: "Employee role?",
+//     name: "role",
+//     choices: ["Engineer", "Intern", "Manager"]
+// }
+
+// let employArray = [];
+
+//    function init() {
+//     function prompt()
+//         // for loop iterates over each employee in the array 
+//         for (let i = 0; i < employArray.length; i++) {
+//             // renderProfile is what I'm going to use to make the cards
+//             return employString = employString + html.renderProfile(employArray[i]);
+//         }
+
+//         // template literal 
+//         // OR stringify.json?
+//         let employString = ``;
+//         let renderHTML = generateHTML(employString)
+//         fs.writeFileAsync(renderHTML,"./dist/index.html")
+
+//     } catch (err) {
+//         throw (err);
+//     }
+// };
 
 // PROMPT BUCKET #1
-   function prompt() {
-        let response = await inquirer.prompt([
 
-                // array of questions for user input*
-                {
-                    type: "input",
-                    name: "name",
-                    message: "Employee name?"
-                },
+const addEmployee = () => {
+    inquirer.prompt(questions)
+        .then(function (response) {
+            if (response.role === 'Engineer') {
 
-                {
-                    type: "input",
-                    name: "id",
-                    message: "Employee ID?"
-                },
+            }
+        })
+}
 
-                {
-                    type: "input",
-                    name: "email",
-                    message: "Employee email address?"
-                },
 
-                {
-                    type: "list",
-                    message: "Employee role?",
-                    name: "role",
-                    choices: ["Engineer", "Intern", "Manager"]
-                }
-                // end of question array //
-            ]);
-        }
+const addEngineer = () => {
+    inquirer.prompt(questions2)
+        .then(function () {
+            if (addEmployee === true) {
+                addEmployee()
+            } else {
+
+            }
+        })
+}
+     
+function addEmployee(){}
+
+const questions = [{}, {}]
+
+
+
+      
+
+           
+    
 
 // PROMPT BUCKET #2
-
+// // // // // // // // // // // // 
 // HERE IS WHAT AARON SHOWED ME:
 const inquirer = require('inquirer');
 class Employee {
@@ -106,6 +133,7 @@ function addEngineer() {
     inquirer.prompt().then(  handle the answers, create new member, update the "state" )
 }
 // END AARONS CODE //
+// // // // // // // // // // // 
 
     let response = "";
         if (response.role === "Engineer") {
@@ -160,7 +188,7 @@ function addEngineer() {
 
         // if user chooses "YES" then continue running the program
        if (response.teamComplete === "YES")
-    //    then ?? I don't know what goes here...
+    //    then ?? I don't know what goes here.. NO = writefile.
           console.log("\n-------------\n");
     
     // Function call to initialize app*
