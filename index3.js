@@ -162,7 +162,18 @@ function addManager() {
 
         }
     })
-}
+};
+
+const writeFile = data => {
+    fs.writeFile('./dist/index.html', data, err => {
+        if (err) {
+            console.log(err);
+            return;
+        } else {
+            console.log("Check out your spiffy new team profile!!")
+        }
+    })
+}; 
 
 // Function call to initialize app*
 init();
