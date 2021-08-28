@@ -14,7 +14,7 @@ const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
 // const validator = require("email-validator");
-const generate = require("./src/generateHTML.js");
+const generate = require("./src/generateHTML.js").default;
 const inquirer = require("inquirer");
 const fs = require("fs");
 
@@ -131,7 +131,7 @@ const employArray = [];
 function init() {
 
     inquirer.prompt(engineerPrompts)
-    .then(prompts => {
+    .then((prompts) => {
         const engineer = new Engineer(prompts.name, prompts.id, prompts.email, prompts.github);
         employArray.push(engineer);
         if (prompts.continue === "ADD AN INTERN") {
@@ -140,15 +140,15 @@ function init() {
         } else if (prompts.continue === "ADD A MANAGER") {
             addManager();
         } else {
-            completeHTML(employArray)
-        
-
+            generateHTML(render(employArray))
         }
+        
     })   
 }
+
 function addIntern() {
     inquirer.prompt(internPrompts)
-    .then(prompts => {
+    .then((prompts) => {
         const intern = new Intern(prompts.name, prompts.id, prompts.email, prompts.school);
         employArray.push(intern);
         if (prompts.continue === "ADD AN ENGINEER") {
@@ -157,14 +157,14 @@ function addIntern() {
         } else if (prompts.continue === "ADD A MANAGER") {
                 addManager();
         } else {
-            completeHTML(employArray)
+            generateHTML(render(employArray))
 
-    }
+        }
     })
 }
 function addManager() {
     inquirer.prompt(managerPrompts)
-    .then(prompts => {
+    .then((prompts) => {
         const manager = new Manager(prompts.name, prompts.id, prompts.email, prompts.office);
         employArray.push(manager);
         if (prompts.continue === "ADD AN INTERN") {
@@ -173,12 +173,12 @@ function addManager() {
         } else if (prompts.continue === "ADD AN ENGINEER") {
                 addEngineer();
         } else {
-         completeHTML(employArray)
+         generateHTML(render(employArray))
 
         }
     })
 }
-
+console.log (employArray);
 
 // readme generator code:
 // function init() {
@@ -199,6 +199,11 @@ function addManager() {
 
 //     )}
 
+
+
+// Function call to initialize app*
+init();
+
 const writeFile = data => {
     fs.writeFile('./dist/index.html', generate.data, err => {
         if (err) {
@@ -209,6 +214,3 @@ const writeFile = data => {
         }
     })
 }; 
-
-// Function call to initialize app*
-init();

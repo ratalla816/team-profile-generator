@@ -1,110 +1,129 @@
-const generateHTML= (data) => {
+// import employArray from "./index.js"
 
-    teamArray = []; 
+const createEngineer = function (engineer) {
+    return `
+    <div class="col-4 mt-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h3>${engineer.name}</h3>
+                <h4>Engineer</h4><i class="fas fa-database"></i>
+            </div>
+            <div class="card-body">
+                <p class="id">ID: ${engineer.id}</p>
+                <p class="email">Email: <a href="mailto:${engineer.email}">${engineer.email}</a></p>
+                <p class="github">Github: <a href="https://github.com/${engineer.github}">${engineer.github}</a></p>
+            </div>
+        </div>
+    </div>
+    `
+}
+
+const createIntern = function (intern) {
+    return `
+    <div class="col-4 mt-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h3>${intern.name}</h3>
+                <h4>Intern</h4><i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="card-body">
+                <p class="id">ID: ${intern.id}</p>
+                <p class="email">Email:<a href="mailto:${intern.email}">${intern.email}</a></p>
+                <p class="school">School: ${intern.school}</p>
+            </div>
+        </div>
+   </div>
+    `
+}
+
+const createManager = function (manager) {
+    return `
+        <div class="col-4 mt-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h3>${manager.name}</h3>
+                    <h4>Manager</h4><i class="fas fa-briefcase"></i>
+                </div>
+                <div class="card-body">
+                    <p class="id">ID: ${manager.id}</p>
+                    <p class="email">Email: <a href="mailto:${manager.email}">${manager.email}</a></p>
+                    <p class="office">Office Number: ${manager.office}</p>
+                </div>
+            </div>
+        </div>
+        `
+};
+
+const generateHTML = (employArray) => {
+
+    employArray = [];
 
     for (let i = 0; i < data.length; i++) {
-        const employee = data[i];
-        const role = employee.getRole(); 
-
-
        
-        if (role === 'Engineer') {
-            const engineerCard = generateEngineer(employee);
 
-            teamArray.push(engineerCard);
+
+
+        if (employArray[i].role(role === 'Engineer')) {
+            const engineerCard = createEngineer(employee);
+
+            profileArray.push(engineerCard);
         }
 
-       
-        if (role === 'Intern') {
-            const internCard = generateIntern(employee);
 
-            teamArray.push(internCard);
+        if (employArray[i].role(role === 'Intern')) {
+            const internCard = createIntern(employee);
+
+            profileArray.push(internCard);
         }
 
-        
-        if (role === 'Manager') {
-            const managerCard = generateManager(employee);
 
-            teamArray.push(managerCard);
+        if (employArray[i].role(role === 'Manager')) {
+            const managerCard = createManager(employee);
+
+            profileArray.push(managerCard);
         }
-        
+
     }
 
-  
-return `<!DOCTYPE html>
+
+    // joining strings 
+    const profileCards = profileArray.join('')
+
+    // return to generated page
+    const renderProfiles = generateTeamProfiles(profileCards);
+    return renderProfiles;
+
+}
+
+
+
+// generate html page 
+const generateTeamProfiles = function (profileCards) {
+
+    return `<!DOCTYPE html>
 <html>
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Weather Dashboard</title>
+  <title>Le Générateur de profil d'équipe</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
     integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
   <link rel="stylesheet" href="./dist/style.css">
-</head>
-<body>
-
-<section class="hero">
-    <div class="hero-excel">
-      <h1>Team Profile Generator</h1>
-      <p>
-      <h2>Cool stuff about your team edit this later!</h2>
-      </p>
+ </head>
+  <body>
+    <header class="jumbotron">
+           <h1 class="display-4 text-success bg-dark">Team Profile Generator</h1>
+         </header>
+       <main>
+          <div class="container">
+           <div class="row justify-content-center" id="profile-cards">
+            ${profileCards}
+        </div>
     </div>
-    <br>
-    </div>
-  </section>
-  <br>
-  <div>
-	<div>  
-       <div class="container-fluid">
-	   </div>
-       <main class="col-12 col-lg-9 d-flex flex-column ">
-      <div class="m-5 row justify-content-around">
-          <!--  -->
-          <div class="col-12 col-md-6 col-xl-3 mb-3">
-            <div class="card">
-              <h4 class="card-header bg-dark text-light d-flex align-items-center">
-                Engineer
-                ${data.name}
-                ${data.id}
-                ${data.email}
-                ${data.github}
-              </h4>
-              <ul id="list-addEngineer" class="list-group list-group-flush">
-              </ul>
-            </div>
-          </div>
-          <!--  -->
-           <div class="col-12 col-md-6 col-xl-3 mb-3">
-            <div class="card">
-              <h4 class="card-header bg-dark text-light d-flex align-items-center">
-                Intern
-                ${data.name}
-                ${data.id}
-                ${data.email}
-                ${data.school}
-              </h4>
-              <ul id="list-addIntern" class="list-group list-group-flush">
-              </ul>
-            </div>
-          </div>
-          <!--  -->
-          <div class="col-12 col-md-6 col-xl-3 mb-3">
-            <div class="card">
-              <h4 class="card-header bg-dark text-light d-flex align-items-center">
-                Manager
-                ${data.name}
-                ${data.id}
-                ${data.email}
-                ${data.office}
-              </h4>
-              <ul id="list-addManager" class="list-group list-group-flush">
-             </ul>
-           </div>
-         </div>
-        </main> 
- </body>
+ </main>    
+</body>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"
   integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/popper.js@1.16.0/dist/umd/popper.min.js"></script>
@@ -115,4 +134,4 @@ return `<!DOCTYPE html>
 
 }
 
-module.exports = generateHTML
+module.exports = generateHTML; 
