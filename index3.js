@@ -13,8 +13,8 @@
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
-const validator = require("email-validator");
-const html = require("./src/generateHTML.js");
+// const validator = require("email-validator");
+const generate = require("./src/generateHTML.js");
 const inquirer = require("inquirer");
 const fs = require("fs");
 
@@ -49,7 +49,7 @@ const engineerPrompts = [
     type: "list",
     name: "continue",
     message: "How would you like to proceed?",
-    choises: ["ADD ANOTHER ENGINEER", "ADD AN INTERN", "ADD A MANAGER", "MY TEAM IS COMPLETE"]
+    choices: ["ADD AN ENGINEER", "ADD AN INTERN", "ADD A MANAGER", "MY TEAM IS COMPLETE"]
 },
 
 ];
@@ -84,7 +84,7 @@ const internPrompts = [
         type: "list",
         name: "continue",
         message: "How would you like to proceed?",
-        choises: ["ADD ANOTHER INTERN", "ADD AN ENGINEER", "ADD A MANAGER", "MY TEAM IS COMPLETE"]
+        choices: ["ADD AN ENGINEER", "ADD AN INTERN", "ADD A MANAGER", "MY TEAM IS COMPLETE"]
     },
 
 ];
@@ -111,7 +111,7 @@ const managerPrompts = [
     
     {
         type: "input",
-        name: "github",
+        name: "office",
         message: "Please enter the manager's office number.",
     },
     
@@ -119,7 +119,7 @@ const managerPrompts = [
         type: "list",
         name: "continue",
         message: "How would you like to proceed?",
-        choises: ["ADD ANOTHER MANAGER", "ADD AN ENGINEER", "ADD AN INTERN", "MY TEAM IS COMPLETE"]
+        choices: ["ADD AN ENGINEER", "ADD AN INTERN", "ADD A MANAGER", "MY TEAM IS COMPLETE"]
     },  
 
 ];
@@ -127,45 +127,80 @@ const managerPrompts = [
 // end of question array //
 
 const employArray = [];
-
+// CREDIT: Nathan Szurek (Tutor), Calvin Freese (TA), Kelsey Gasser (TA)
 function init() {
 
     inquirer.prompt(engineerPrompts)
-    .then(function () {
-        if (addEmployee === true) {
-            addEmployee()
+    .then(prompts => {
+        const engineer = new Engineer(prompts.name, prompts.id, prompts.email, prompts.github);
+        employArray.push(engineer);
+        if (prompts.continue === "ADD AN INTERN") {
+            addIntern();
+
+        } else if (prompts.continue === "ADD A MANAGER") {
+            addManager();
         } else {
+            completeHTML(employArray)
+        
 
         }
-    })
+    })   
 }
-
 function addIntern() {
-
     inquirer.prompt(internPrompts)
-    .then(function () {
-        if (addEmployee === true) {
-            addEmployee()
+    .then(prompts => {
+        const intern = new Intern(prompts.name, prompts.id, prompts.email, prompts.school);
+        employArray.push(intern);
+        if (prompts.continue === "ADD AN ENGINEER") {
+            addEngineer();
+
+        } else if (prompts.continue === "ADD A MANAGER") {
+                addManager();
         } else {
+            completeHTML(employArray)
+
+    }
+    })
+}
+function addManager() {
+    inquirer.prompt(managerPrompts)
+    .then(prompts => {
+        const manager = new Manager(prompts.name, prompts.id, prompts.email, prompts.office);
+        employArray.push(manager);
+        if (prompts.continue === "ADD AN INTERN") {
+            addIntern();
+
+        } else if (prompts.continue === "ADD AN ENGINEER") {
+                addEngineer();
+        } else {
+         completeHTML(employArray)
 
         }
     })
 }
 
-function addManager() {
 
-    inquirer.prompt(internPrompts)
-    .then(function () {
-        if (addManager === true) {
-            addEmployee()
-        } else {
+// readme generator code:
+// function init() {
+//     inquirer.prompt(questions).then(function(userInput) {
+        
+//         const markdownString = generateMarkdown(userInput)
 
-        }
-    })
-};
+//         // TODO: Create a function to write README file
+//         fs.writeFile('README.md', markdownString, function(err) {
+//             if(err) {
+//                 console.log(err)
+//             }
+//             else {
+//                 console.log('Look at your spiffy new README!')
+//             }
+//         })
+//     },
+
+//     )}
 
 const writeFile = data => {
-    fs.writeFile('./dist/index.html', data, err => {
+    fs.writeFile('./dist/index.html', generate.data, err => {
         if (err) {
             console.log(err);
             return;
