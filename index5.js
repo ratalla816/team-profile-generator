@@ -10,9 +10,9 @@
 // //   ---"--- 
 
 // // packages needed*
+const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
-const Manager = require("./lib/Manager");
 // const validator = require("email-validator");
 const generate = require("./src/generateHTML.js")
 const inquirer = require("inquirer");
@@ -45,6 +45,13 @@ const engineerPrompts = [
     message: "Please enter the engineer's Github username.",
 },
 
+{
+    type: "list",
+    name: "continue",
+    message: "How would you like to proceed?",
+    choices: ["ADD AN ENGINEER", "ADD AN INTERN", "ADD A MANAGER", "MY TEAM IS COMPLETE"]
+},
+
 ];
 
 const internPrompts = [
@@ -72,6 +79,14 @@ const internPrompts = [
         name: "school",
         message: "Please enter the name of the school the intern attends.",
     },
+    
+    {
+        type: "list",
+        name: "continue",
+        message: "How would you like to proceed?",
+        choices: ["ADD AN ENGINEER", "ADD AN INTERN", "ADD A MANAGER", "MY TEAM IS COMPLETE"]
+    },
+
 ];
 
 const managerPrompts = [
@@ -99,113 +114,76 @@ const managerPrompts = [
         name: "office",
         message: "Please enter the manager's office number.",
     },
-      
+    
+    {
+        type: "list",
+        name: "continue",
+        message: "How would you like to proceed?",
+        choices: ["ADD AN ENGINEER", "ADD AN INTERN", "ADD A MANAGER", "MY TEAM IS COMPLETE"]
+    },  
+
 ];
 
 // end of question array //
 
 const employArray = [];
-
+// CREDIT: Nathan Szurek (Tutor), Calvin Freese (TA), Kelsey Gasser (TA)
 function init() {
-    const proceed = () => {
-        inquirer.prompt(
-            {
-                type: "confirm",
-                name: "proceed",
-                message: "would you like to add an employee to your team?",
-                default: true,
-            }
-            // Yes - ask for employee type. No - writefile
-        ).then((response) => {
-            if (response.add === true) {
-              addEmployee();
-            } if (response.add === false) {
-                console.log(employArray);
-                getProfileHTML(employArray);
-            }    
-        })   
-    }
 
-    const addEmployee = () => {
-        inquirer.prompt({
-            type: 'list',
-            name: 'employee',
-            message: 'What type of employee would you like to add?',
-            choices: ['Manager', 'Engineer', 'Intern'],
-        }).then((response) => {
-            switch(response.employee) {
-                case 'Engineer':
-                    engineerPrompt();
-                    break;
-                case 'Intern':
-                    internPrompt();
-                    break;
-                case 'Manager':
-                    managerPrompt();
-                    break;
-            }
-        });
-    };
-
-// CREDIT: Nathan Szurek (Tutor), Calvin Freese (TA), Kelsey Gasser (TA) Brian Wilde (Classmate)
-    function addEngineer() {
-     inquirer.prompt(engineerPrompts)
+    inquirer.prompt(engineerPrompts)
     .then((prompts) => {
-        this.engineer = new Engineer(prompts.name, prompts.id, prompts.email, prompts.github);
-        employArray.push(this.engineer);
-         proceed();            
-                
+        const engineer = new Engineer(prompts.name, prompts.id, prompts.email, prompts.github);
+        employArray.push(engineer);
+        if (prompts.continue === "ADD AN INTERN") {
+            addIntern();
+
+        } else if (prompts.continue === "ADD A MANAGER") {
+            addManager();
+        } else {
+            generateHTML(render(employArray))
+        }
+        
     })   
 }
 
-   function addIntern() {
+function addIntern() {
     inquirer.prompt(internPrompts)
     .then((prompts) => {
-        this.intern = new Intern(prompts.name, prompts.id, prompts.email, prompts.school);
-        employArray.push(this.intern);
-        proceed();
-      
+        const intern = new Intern(prompts.name, prompts.id, prompts.email, prompts.school);
+        employArray.push(intern);
+        if (prompts.continue === "ADD AN ENGINEER") {
+            addEngineer();
+
+        } else if (prompts.continue === "ADD A MANAGER") {
+                addManager();
+        } else {
+            generateHTML(render(employArray))
+
+        }
     })
 }
-
-   function addManager() {
+function addManager() {
     inquirer.prompt(managerPrompts)
     .then((prompts) => {
-        this.manager = new Manager(prompts.name, prompts.id, prompts.email, prompts.office);
-        employArray.push(this.manager);
-        proceed();
+        const manager = new Manager(prompts.name, prompts.id, prompts.email, prompts.office);
+        employArray.push(manager);
+        if (prompts.continue === "ADD AN INTERN") {
+            addIntern();
 
+        } else if (prompts.continue === "ADD AN ENGINEER") {
+                addEngineer();
+        } else {
+         generateHTML(render(employArray))
+
+        }
     })
 }
+console.log (employArray);
 
-let profileHTML = '';
+// Function call to initialize app*
+init();
 
-const getProfileHTML = (employArray) => {
-
-    employArray = [];
-
-    for (let i = 0; i < data.length; i++) {
-       
-        if (employArray[i].role(role === 'Engineer')) {
-            profileHTML = profileHTML + engineerProfileHTML(employArray[i]);
-            
-        }
-
-    if (employArray[i].role(role === 'Intern')) {
-            profileHTML = profileHTML + internProfileHTML(employArray[i]);
-
-        }
-
-
-    if (employArray[i].role(role === 'Manager')) {
-            profileHTML = profileHTML + managerProfileHTML(employArray[i]);
-
-        }
-
-    }
-
-
-const writeFile = (finalHTML) => {
+const writeFile = data => {
     fs.writeFile('./dist/index.html', generate.data, err => {
         if (err) {
             console.log(err);
@@ -215,9 +193,4 @@ const writeFile = (finalHTML) => {
         }
     })
 }; 
-
-// Function call to initialize app*
-init();
-
-module.exports = profileHTML
 

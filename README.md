@@ -40,7 +40,7 @@
   generation of profiles
   
   # Acknowledgements
-  Rob Atalla, Nathan Szurek (Tutor), Calvin Freese (TA), Kelsey Gasser (TA)
+  Rob Atalla, Nathan Szurek (Tutor), Calvin Freese (TA), Kelsey Gasser (TA) Brian Wilde (Classmate)
     
   ## License
   ![badge](https://img.shields.io/badge/license-MIT-important)

@@ -54,36 +54,6 @@ const createManager = function (manager) {
         `
 };
 
-const generateHTML = (employArray) => {
-
-    employArray = [];
-
-    for (let i = 0; i < data.length; i++) {
-       
-
-
-
-        if (employArray[i].role(role === 'Engineer')) {
-            const engineerCard = createEngineer(employee);
-
-            profileArray.push(engineerCard);
-        }
-
-
-        if (employArray[i].role(role === 'Intern')) {
-            const internCard = createIntern(employee);
-
-            profileArray.push(internCard);
-        }
-
-
-        if (employArray[i].role(role === 'Manager')) {
-            const managerCard = createManager(employee);
-
-            profileArray.push(managerCard);
-        }
-
-    }
 
 
     // joining strings 
@@ -135,3 +105,4 @@ const generateTeamProfiles = function (profileCards) {
 }
 
 module.exports = generateHTML; 
+
