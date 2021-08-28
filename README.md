@@ -40,7 +40,7 @@
   generation of profiles
   
   # Acknowledgements
-  Rob Atalla, God, Spooki the Cat
+  Rob Atalla, Nathan Szurek (Tutor), Calvin Freese (TA), Kelsey Gasser (TA)
     
   ## License
   ![badge](https://img.shields.io/badge/license-MIT-important)
