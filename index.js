@@ -19,7 +19,7 @@ const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
 // figure out how to do this !!!
-const validation = require("validation");
+const validator = require("email-validator");
 // async function
 const writeFileAsync = dist.promisify(fs.writeFile);
 const appendFileAsync = dist.promisify(fs.appendFile);
