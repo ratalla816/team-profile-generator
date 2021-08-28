@@ -22,24 +22,105 @@ const fs = require("fs");
 const engineerPrompts = [
 
 {
- 
+    type: "input",
+    name: "name",
+    message: "Please enter the engineer's full name.",
 },    
+
+{
+    type: "input",
+    name: "id",
+    message: "Please enter the engineer's employee ID.",
+},
+
+{
+    type: "input",
+    name: "email",
+    message: "Please enter the engineer's email address.",
+},
+
+{
+    type: "input",
+    name: "github",
+    message: "Please enter the engineer's Github username.",
+},
+
+{
+    type: "list",
+    name: "continue",
+    message: "How would you like to proceed?",
+    choises: ["ADD ANOTHER ENGINEER", "ADD AN INTERN", "ADD A MANAGER", "MY TEAM IS COMPLETE"]
+},
 
 ];
 
 const internPrompts = [
 
-{
-
-},    
+    {
+        type: "input",
+        name: "name",
+        message: "Please enter the intern's full name.",
+    },    
+    
+    {
+        type: "input",
+        name: "id",
+        message: "Please enter the intern's employee ID.",
+    },
+    
+    {
+        type: "input",
+        name: "email",
+        message: "Please enter the intern's email address.",
+    },
+    
+    {
+        type: "input",
+        name: "school",
+        message: "Please enter the name of the school the intern attends.",
+    },
+    
+    {
+        type: "list",
+        name: "continue",
+        message: "How would you like to proceed?",
+        choises: ["ADD ANOTHER INTERN", "ADD AN ENGINEER", "ADD A MANAGER", "MY TEAM IS COMPLETE"]
+    },
 
 ];
 
 const managerPrompts = [
 
-{
-
-},    
+    {
+        type: "input",
+        name: "name",
+        message: "Please enter the manager's full name.",
+    },    
+    
+    {
+        type: "input",
+        name: "id",
+        message: "Please enter the manager's employee ID.",
+    },
+    
+    {
+        type: "input",
+        name: "email",
+        message: "Please enter the manager's email address.",
+    },
+    
+    {
+        type: "input",
+        name: "github",
+        message: "Please enter the manager's office number.",
+    },
+    
+    {
+        type: "list",
+        name: "continue",
+        message: "How would you like to proceed?",
+        choises: ["ADD ANOTHER MANAGER", "ADD AN ENGINEER", "ADD AN INTERN", "MY TEAM IS COMPLETE"]
+    },  
 
 ];
 
