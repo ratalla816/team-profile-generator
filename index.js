@@ -1,6 +1,3 @@
-// // stuff I will use: npm inquirer, Jest- employee values, async functions, try catch, do try let, console logs
-// // async await, promisify, else if, require (fs), writeFileAsync, validation??
-// // stuff I will need: THE SRC FILES!!!!, classes from lib, inquirer questions, employee question bucket and role question buckets, template literals, team member array, the array index thing (let i = 0; i < array.length; i++)
 
 // //    _____
 // //   |A .  |
@@ -14,7 +11,6 @@ const generateHTML = require("./src/generateHTML.js")
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
-// const validator = require("email-validator");
 const inquirer = require("inquirer");
 const fs = require("fs");
 
@@ -92,7 +88,7 @@ const buildEmployee = () => {
         {
             type: 'input',
             name: 'github',
-            message: "Please enter the employee's Github username.",
+            message: "Please enter their Github username.",
             when: (input) => input.role === "Engineer",
         },
         
@@ -105,30 +101,26 @@ const buildEmployee = () => {
 
         {
             type: 'confirm',
-            name: 'confirmBuildEmployee',
-            message: 'Add another teammember?',
+            name: 'buildEmployeeConfirm',
+            message: 'Add another teammate?',
         }
     ])
-    .then(employeeData => {
+    .then(userInput => {
         // Selects the data sets for each employee class
 
-        let { name, id, email, role, github, school, confirmBuildEmployee } = employeeData; 
+        let { name, id, email, role, github, school, buildEmployeeConfirm } = userInput; 
         let employee; 
 
         if (role === "Engineer") {
             employee = new Engineer (name, id, email, github);
 
-            console.log(employee);
-
-        } else if (role === "Intern") {
+         } else if (role === "Intern") {
             employee = new Intern (name, id, email, school);
-
-            console.log(employee);
         }
         // pushes newly built employee to employArray
         employArray.push(employee); 
 
-        if (confirmBuildEmployee) {
+        if (buildEmployeeConfirm) {
             return buildEmployee(employArray); 
         } else {
             return employArray;
@@ -141,12 +133,11 @@ const buildEmployee = () => {
 // If user chooses not to buildEmployee then index file is written 
 const writeFile = data => {
     fs.writeFile('./dist/index.html', data, err => {
-        // if there is an error 
-        if (err) {
+          if (err) {
             console.log(err);
             return;
         } else {
-            console.log("Check out your spiffy new index file!")
+            console.log("Check out your spiffy new index.html file!")
         }
     })
 }; 

@@ -1,6 +1,11 @@
-// add manager get office number
-const Manager = require("./lib/Manager");
+const Manager = require('../lib/Manager');
 
-test ('office number')
+test ('confirm office number', () => {
+    const manager = new manager('Rob Atalla', '777', 'rob.atalla@gmail.com', '2727');
+    expect(manager.OfficeNumber()).toBe('777');
+});
 
-test ('manager role')
+test ('confirm role', () => {
+    const manager = new manager('Rob Atalla', '777', 'rob.atalla@gmail.com', '2727');
+    expect(manager.getRole()).toBe('manager');
+});
