@@ -107,11 +107,10 @@ const buildEmployee = () => {
             type: 'confirm',
             name: 'confirmBuildEmployee',
             message: 'Add another teammember?',
-            default: false
         }
     ])
     .then(employeeData => {
-        // data for employee types 
+        // Selects the data sets for each employee class
 
         let { name, id, email, role, github, school, confirmBuildEmployee } = employeeData; 
         let employee; 
@@ -126,7 +125,7 @@ const buildEmployee = () => {
 
             console.log(employee);
         }
-
+        // pushes newly built employee to employArray
         employArray.push(employee); 
 
         if (confirmBuildEmployee) {
@@ -139,14 +138,13 @@ const buildEmployee = () => {
 };
 
 
-// function to generate HTML page file using file system 
+// If user chooses not to buildEmployee then index file is written 
 const writeFile = data => {
     fs.writeFile('./dist/index.html', data, err => {
         // if there is an error 
         if (err) {
             console.log(err);
             return;
-        // when the profile has been created 
         } else {
             console.log("Check out your spiffy new index file!")
         }
@@ -154,20 +152,16 @@ const writeFile = data => {
 }; 
 
 buildManager()
+// callback to execute when the Promise is resolved.
   .then(buildEmployee)
   .then(employArray => {
+// callback to execute when the Promise is rejected.      
     return generateHTML(employArray);
   })
   .then(finalHTML => {
+ // Promise for the completion of which ever callback is executed     
     return writeFile(finalHTML);
   })
   .catch(err => {
  console.log(err);
   });
-
-
-
-
-
-
-
