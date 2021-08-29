@@ -1,5 +1,5 @@
 
-
+// profile cards
 const createManager = function (manager) {
     return`
         <div class="col-3 mt-4">
@@ -54,12 +54,9 @@ const createIntern = function (intern) {
     `
 };
 
-
-
-// push array to page 
 generateHTML = (data) => {
 
-    // array for cards 
+    // array holds the profile data that will be displayed on the cards 
     profileArray = []; 
 
     for (let i = 0; i < data.length; i++) {
@@ -67,21 +64,18 @@ generateHTML = (data) => {
         const role = employee.getRole(); 
 
 
-        // call manager function
         if (role === 'Manager') {
             const managerProfile = createManager(employee);
 
             profileArray.push(managerProfile);
         }
 
-        // call engineer function
         if (role === 'Engineer') {
             const engineerProfile = createEngineer(employee);
 
             profileArray.push(engineerProfile);
         }
 
-        // call intern function 
         if (role === 'Intern') {
             const internProfile = createIntern(employee);
 
@@ -91,17 +85,17 @@ generateHTML = (data) => {
     }
 
     
-    // joining strings 
+    // profiles in the array are joined so the data can be rendered on the html page
     const employeeProfiles = profileArray.join('')
 
     // return to generated page
-    const generateTeam = generateTeamPage(employeeProfiles); 
-    return generateTeam;
+    const renderTeam = renderTeamPage(employeeProfiles); 
+    return renderTeam;
 
 }
 
-// generate html page 
-const generateTeamPage = function (employeeProfiles) {   
+// creating the index file with all the teammembers' profiles 
+const renderTeamPage = function (employeeProfiles) {   
 
     return`
     <!DOCTYPE html>
