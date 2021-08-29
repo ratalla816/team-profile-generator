@@ -1,4 +1,4 @@
-const Employee = require("../lib/Employee");
+import Employee from "../lib/Employee";
 
 test('confirm name', () => {
     const employee = new Employee('Rob Atalla', '777', 'rob.atalla@gmail.com');
