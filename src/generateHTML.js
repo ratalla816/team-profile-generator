@@ -2,7 +2,7 @@
 // profile cards
 const createManager = function (manager) {
 return`
-    <div class="col-3 mt-4">
+    <div class="col-3 mt-5">
     <div class="card h-80">
     <div class="card-header">
          <h3>${manager.name}</h3>
@@ -20,7 +20,7 @@ return`
 
 const createEngineer = function (engineer) {
 return`
-    <div class="col-3 mt-4">
+    <div class="col-3 mt-5">
     <div class="card h-80">
     <div class="card-header">
          <h3>${engineer.name}</h3>
@@ -38,7 +38,7 @@ return`
 
 const createIntern = function (intern) {
 return`
-    <div class="col-3 mt-4">
+    <div class="col-3 mt-5">
     <div class="card h-80">
     <div class="card-header">
          <h3>${intern.name}</h3>
