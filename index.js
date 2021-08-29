@@ -40,10 +40,9 @@ const fs = require("fs");
     
 {
     type: "input",
-    name: "office",
+    name: "officeNumber",
     message: "Please enter the manager's office number.",
-},
-
+}
 ]
   
 // end of question array //
@@ -55,7 +54,7 @@ const employArray = [];
     const buildManager = () => {
      return inquirer.prompt(managerPrompts)
     .then((prompts) => {
-        const manager = new Manager(prompts.name, prompts.id, prompts.email, prompts.office);
+        const manager = new Manager(prompts.name, prompts.id, prompts.email, prompts.officeNumber);
         employArray.push(manager);
         console.log(manager)
                   
@@ -63,14 +62,13 @@ const employArray = [];
     })  
 };
 
-const addEmployee = () => {
-    console.log(`Adding additional teammates `);
-
+const buildEmployee = () => {
+    
     return inquirer.prompt ([
         {
             type: 'list',
             name: 'role',
-            message: "Please choose role",
+            message: "Please select their role",
             choices: ['Engineer', 'Intern']
         },
         {
@@ -107,12 +105,39 @@ const addEmployee = () => {
 
         {
             type: 'confirm',
-            name: 'confirmAddEmployee',
+            name: 'confirmBuildEmployee',
             message: 'Add another teammember?',
             default: false
         }
     ])
-    
+    .then(employeeData => {
+        // data for employee types 
+
+        let { name, id, email, role, github, school, confirmBuildEmployee } = employeeData; 
+        let employee; 
+
+        if (role === "Engineer") {
+            employee = new Engineer (name, id, email, github);
+
+            console.log(employee);
+
+        } else if (role === "Intern") {
+            employee = new Intern (name, id, email, school);
+
+            console.log(employee);
+        }
+
+        employArray.push(employee); 
+
+        if (confirmBuildEmployee) {
+            return buildEmployee(employArray); 
+        } else {
+            return employArray;
+        }
+    })
+
+};
+
 
 // function to generate HTML page file using file system 
 const writeFile = data => {
@@ -123,14 +148,18 @@ const writeFile = data => {
             return;
         // when the profile has been created 
         } else {
-            console.log("Look at your spiffy new index file!")
+            console.log("Check out your spiffy new index file!")
         }
     })
 }; 
 
-
-  .then(pageHTML => {
-    return writeFile(pageHTML);
+buildManager()
+  .then(buildEmployee)
+  .then(employArray => {
+    return generateHTML(employArray);
+  })
+  .then(finalHTML => {
+    return writeFile(finalHTML);
   })
   .catch(err => {
  console.log(err);

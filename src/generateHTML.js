@@ -1,7 +1,9 @@
+
+
 const createManager = function (manager) {
-    return `
-        <div class="col-3 mt-3">
-            <div class="card h-100">
+    return`
+        <div class="col-3 mt-4">
+            <div class="card h-80">
                 <div class="card-header">
                     <h3>${manager.name}</h3>
                     <h4>Manager</h4><i class="fas fa-briefcase"></i>
@@ -9,7 +11,7 @@ const createManager = function (manager) {
                 <div class="card-body">
                     <p class="id">ID: ${manager.id}</p>
                     <p class="email">Email: <a href="mailto:${manager.email}">${manager.email}</a></p>
-                    <p class="office">Office Number: ${manager.office}</p>
+                    <p class="officeNumber">Office Number: ${manager.officeNumber}</p>
                 </div>
             </div>
         </div>
@@ -17,9 +19,9 @@ const createManager = function (manager) {
 }
 
 const createEngineer = function (engineer) {
-    return `
-    <div class="col- mt-3">
-        <div class="card h-100">
+    return`
+    <div class="col-3 mt-4">
+        <div class="card h-80">
             <div class="card-header">
                 <h3>${engineer.name}</h3>
                 <h4>Engineer</h4><i class="fas fa-database"></i>
@@ -35,9 +37,9 @@ const createEngineer = function (engineer) {
 }
 
 const createIntern = function (intern) {
-    return `
-    <div class="col-3 mt-3">
-        <div class="card h-100">
+    return`
+    <div class="col-3 mt-4">
+        <div class="card h-80">
             <div class="card-header">
                 <h3>${intern.name}</h3>
                 <h4>Intern</h4><i class="fas fa-graduation-cap"></i>
@@ -54,10 +56,53 @@ const createIntern = function (intern) {
 
 
 
+// push array to page 
+generateHTML = (data) => {
+
+    // array for cards 
+    profileArray = []; 
+
+    for (let i = 0; i < data.length; i++) {
+        const employee = data[i];
+        const role = employee.getRole(); 
 
 
+        // call manager function
+        if (role === 'Manager') {
+            const managerProfile = createManager(employee);
+
+            profileArray.push(managerProfile);
+        }
+
+        // call engineer function
+        if (role === 'Engineer') {
+            const engineerProfile = createEngineer(employee);
+
+            profileArray.push(engineerProfile);
+        }
+
+        // call intern function 
+        if (role === 'Intern') {
+            const internProfile = createIntern(employee);
+
+            profileArray.push(internProfile);
+        }
+        
+    }
+
     
-    
+    // joining strings 
+    const employeeProfiles = profileArray.join('')
+
+    // return to generated page
+    const generateTeam = generateTeamPage(employeeProfiles); 
+    return generateTeam;
+
+}
+
+// generate html page 
+const generateTeamPage = function (employeeProfiles) {   
+
     return`
     <!DOCTYPE html>
 <html>
@@ -78,7 +123,7 @@ const createIntern = function (intern) {
        <main>
           <div class="container">
            <div class="row justify-content-center" id="team-cards">
-            ${employeeCards}
+            ${employeeProfiles}
         </div>
     </div>
  </main>    
@@ -93,8 +138,5 @@ const createIntern = function (intern) {
 `;
 
 }
-
-
-
 
 module.exports = generateHTML; 
