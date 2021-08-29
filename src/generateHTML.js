@@ -1,8 +1,24 @@
-// import employArray from "./index.js"
+const createManager = function (manager) {
+    return `
+        <div class="col-3 mt-3">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h3>${manager.name}</h3>
+                    <h4>Manager</h4><i class="fas fa-briefcase"></i>
+                </div>
+                <div class="card-body">
+                    <p class="id">ID: ${manager.id}</p>
+                    <p class="email">Email: <a href="mailto:${manager.email}">${manager.email}</a></p>
+                    <p class="office">Office Number: ${manager.office}</p>
+                </div>
+            </div>
+        </div>
+        `
+}
 
 const createEngineer = function (engineer) {
     return `
-    <div class="col-4 mt-4">
+    <div class="col- mt-3">
         <div class="card h-100">
             <div class="card-header">
                 <h3>${engineer.name}</h3>
@@ -20,7 +36,7 @@ const createEngineer = function (engineer) {
 
 const createIntern = function (intern) {
     return `
-    <div class="col-4 mt-4">
+    <div class="col-3 mt-3">
         <div class="card h-100">
             <div class="card-header">
                 <h3>${intern.name}</h3>
@@ -34,43 +50,16 @@ const createIntern = function (intern) {
         </div>
    </div>
     `
-}
-
-const createManager = function (manager) {
-    return `
-        <div class="col-4 mt-4">
-            <div class="card h-100">
-                <div class="card-header">
-                    <h3>${manager.name}</h3>
-                    <h4>Manager</h4><i class="fas fa-briefcase"></i>
-                </div>
-                <div class="card-body">
-                    <p class="id">ID: ${manager.id}</p>
-                    <p class="email">Email: <a href="mailto:${manager.email}">${manager.email}</a></p>
-                    <p class="office">Office Number: ${manager.office}</p>
-                </div>
-            </div>
-        </div>
-        `
 };
 
 
 
-    // joining strings 
-    const profileCards = profileArray.join('')
-
-    // return to generated page
-    const renderProfiles = generateTeamProfiles(profileCards);
-    return renderProfiles;
-
-}
 
 
-
-// generate html page 
-const generateTeamProfiles = function (profileCards) {
-
-    return `<!DOCTYPE html>
+    
+    
+    return`
+    <!DOCTYPE html>
 <html>
 
 <head>
@@ -88,8 +77,8 @@ const generateTeamProfiles = function (profileCards) {
          </header>
        <main>
           <div class="container">
-           <div class="row justify-content-center" id="profile-cards">
-            ${profileCards}
+           <div class="row justify-content-center" id="team-cards">
+            ${employeeCards}
         </div>
     </div>
  </main>    
@@ -100,9 +89,12 @@ const generateTeamProfiles = function (profileCards) {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
   integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
-</html>`
+</html>
+`;
 
 }
 
-module.exports = generateHTML; 
 
+
+
+module.exports = generateHTML; 

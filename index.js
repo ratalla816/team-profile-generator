@@ -10,214 +10,135 @@
 // //   ---"--- 
 
 // // packages needed*
+const generateHTML = require("./src/generateHTML.js")
+const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
-const Manager = require("./lib/Manager");
 // const validator = require("email-validator");
-const generate = require("./src/generateHTML.js")
 const inquirer = require("inquirer");
 const fs = require("fs");
 
  // array of questions for user input*
-const engineerPrompts = [
-
+ const managerPrompts = [
 {
     type: "input",
     name: "name",
-    message: "Please enter the engineer's full name.",
+    message: "Please enter the manager's full name.",
 },    
-
+    
 {
     type: "input",
     name: "id",
-    message: "Please enter the engineer's employee ID.",
+    message: "Please enter the manager's employee ID.",
 },
-
+    
 {
     type: "input",
     name: "email",
-    message: "Please enter the engineer's email address.",
+    message: "Please enter the manager's email address.",
 },
-
+    
 {
     type: "input",
-    name: "github",
-    message: "Please enter the engineer's Github username.",
+    name: "office",
+    message: "Please enter the manager's office number.",
 },
 
-];
-
-const internPrompts = [
-
-    {
-        type: "input",
-        name: "name",
-        message: "Please enter the intern's full name.",
-    },    
-    
-    {
-        type: "input",
-        name: "id",
-        message: "Please enter the intern's employee ID.",
-    },
-    
-    {
-        type: "input",
-        name: "email",
-        message: "Please enter the intern's email address.",
-    },
-    
-    {
-        type: "input",
-        name: "school",
-        message: "Please enter the name of the school the intern attends.",
-    },
-];
-
-const managerPrompts = [
-
-    {
-        type: "input",
-        name: "name",
-        message: "Please enter the manager's full name.",
-    },    
-    
-    {
-        type: "input",
-        name: "id",
-        message: "Please enter the manager's employee ID.",
-    },
-    
-    {
-        type: "input",
-        name: "email",
-        message: "Please enter the manager's email address.",
-    },
-    
-    {
-        type: "input",
-        name: "office",
-        message: "Please enter the manager's office number.",
-    },
-      
-];
-
+]
+  
 // end of question array //
 
 const employArray = [];
 
-function init() {
-    const proceed = () => {
-        inquirer.prompt(
-            {
-                type: "confirm",
-                name: "proceed",
-                message: "would you like to add an employee to your team?",
-                default: true,
-            }
-            // Yes - ask for employee type. No - writefile
-        ).then((response) => {
-            if (response.add === true) {
-              addEmployee();
-            } if (response.add === false) {
-                console.log(employArray);
-                getProfileHTML(employArray);
-            }    
-        })   
-    }
-
-    const addEmployee = () => {
-        inquirer.prompt({
-            type: 'list',
-            name: 'employee',
-            message: 'What type of employee would you like to add?',
-            choices: ['Manager', 'Engineer', 'Intern'],
-        }).then((response) => {
-            switch(response.employee) {
-                case 'Engineer':
-                    engineerPrompt();
-                    break;
-                case 'Intern':
-                    internPrompt();
-                    break;
-                case 'Manager':
-                    managerPrompt();
-                    break;
-            }
-        });
-    };
-
+    
 // CREDIT: Nathan Szurek (Tutor), Calvin Freese (TA), Kelsey Gasser (TA) Brian Wilde (Classmate)
-    function addEngineer() {
-     inquirer.prompt(engineerPrompts)
+    const buildManager = () => {
+     return inquirer.prompt(managerPrompts)
     .then((prompts) => {
-        this.engineer = new Engineer(prompts.name, prompts.id, prompts.email, prompts.github);
-        employArray.push(this.engineer);
-         proceed();            
+        const manager = new Manager(prompts.name, prompts.id, prompts.email, prompts.office);
+        employArray.push(manager);
+        console.log(manager)
+                  
                 
-    })   
-}
+    })  
+};
 
-   function addIntern() {
-    inquirer.prompt(internPrompts)
-    .then((prompts) => {
-        this.intern = new Intern(prompts.name, prompts.id, prompts.email, prompts.school);
-        employArray.push(this.intern);
-        proceed();
-      
-    })
-}
+const addEmployee = () => {
+    console.log(`Adding additional teammates `);
 
-   function addManager() {
-    inquirer.prompt(managerPrompts)
-    .then((prompts) => {
-        this.manager = new Manager(prompts.name, prompts.id, prompts.email, prompts.office);
-        employArray.push(this.manager);
-        proceed();
+    return inquirer.prompt ([
+        {
+            type: 'list',
+            name: 'role',
+            message: "Please choose role",
+            choices: ['Engineer', 'Intern']
+        },
+        {
+            type: 'input',
+            name: 'name',
+            message: "Please enter the employee's full name", 
+        },
 
-    })
-}
+        {
+            type: 'input',
+            name: 'id',
+            message: "Please enter their employee ID.",
+        },
 
-let profileHTML = '';
+        {
+            type: 'input',
+            name: 'email',
+            message: "Please enter the employee's email address.",
+        },
 
-const getProfileHTML = (employArray) => {
+        {
+            type: 'input',
+            name: 'github',
+            message: "Please enter the employee's Github username.",
+            when: (input) => input.role === "Engineer",
+        },
+        
+        {
+            type: 'input',
+            name: 'school',
+            message: "What school is the intern attending?",
+            when: (input) => input.role === "Intern",
+        },
 
-    employArray = [];
-
-    for (let i = 0; i < data.length; i++) {
-       
-        if (employArray[i].role(role === 'Engineer')) {
-            profileHTML = profileHTML + engineerProfileHTML(employArray[i]);
-            
+        {
+            type: 'confirm',
+            name: 'confirmAddEmployee',
+            message: 'Add another teammember?',
+            default: false
         }
+    ])
+    
 
-    if (employArray[i].role(role === 'Intern')) {
-            profileHTML = profileHTML + internProfileHTML(employArray[i]);
-
-        }
-
-
-    if (employArray[i].role(role === 'Manager')) {
-            profileHTML = profileHTML + managerProfileHTML(employArray[i]);
-
-        }
-
-    }
-
-
-const writeFile = (finalHTML) => {
-    fs.writeFile('./dist/index.html', generate.data, err => {
+// function to generate HTML page file using file system 
+const writeFile = data => {
+    fs.writeFile('./dist/index.html', data, err => {
+        // if there is an error 
         if (err) {
             console.log(err);
             return;
+        // when the profile has been created 
         } else {
-            console.log("Check out your spiffy new team profile!!")
+            console.log("Look at your spiffy new index file!")
         }
     })
 }; 
 
-// Function call to initialize app*
-init();
 
-module.exports = profileHTML
+  .then(pageHTML => {
+    return writeFile(pageHTML);
+  })
+  .catch(err => {
+ console.log(err);
+  });
+
+
+
+
+
+
 
